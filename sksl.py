@@ -1,62 +1,62 @@
-import json
-with open("dump.json", "r", encoding="utf-8") as file:
-    s = json.load(file)
+import json # импортируем json
+with open("dump.json", "r", encoding="utf-8") as file: # открываем файл в режиме чтения
+    s = json.load(file) # считываем в прееменнную
 
-print("-----------------Меню-----------------")
-print("-------1. Вывести все записи----------")
-print("-------2. Вывести запись по полю----------")
-print("-------3. Добавить запись----------")
-print("-------4. Удалить запись по полю----------")
-print("-------5. Выйти из программы----------")
+print("-----------------Меню-----------------") # выводим
+print("-------1. Вывести все записи----------") # выводим
+print("-------2. Вывести запись по полю----------") # выводим
+print("-------3. Добавить запись----------") # выводим
+print("-------4. Удалить запись по полю----------") # выводим
+print("-------5. Выйти из программы----------") # выводим
 
-a=int(input("Введите номер пункта: "))
+a=int(input("Введите номер пункта: ")) # присваиваем a номер пункта
 
-C=0
-if a <=0 or a>5 :
-    print("Введите корректный номер.")
+C=0 # инициализируем C
+if a <=0 or a>5 : # если оно неккоректное
+    print("Введите корректный номер.") # просим ввести корректное
 
-elif a == 1:
-    print("Все записи:")
-    for d in s:
-        print(json.dumps(d))
-        C += 1
+elif a == 1: # если ввели 1
+    print("Все записи:") # выводиим
+    for d in s: # цикл
+        print(json.dumps(d)) # выводим все
+        C += 1 # прибавляем 1 к C если выполнялось
 
-elif a == 2:
-    idd = int(input("Введите id записи для поиска: "))
-    find = False
-    for index, d in enumerate(s):
-        if d["id"] == idd:
-            print(json.dumps(d, indent=4))
-            find = True
-            break
-    if not find:
-        if d["id"] != idd:
-            print("Запись не найдена.")
+elif a == 2: # если ввели 2
+    idd = int(input("Введите id записи для поиска: ")) # вводим idd которое надо искать
+    find = False # 
+    for index, d in enumerate(s): # цикл для поиска
+        if d["id"] == idd: # если ключ равен нашему введенному idd то
+            print(json.dumps(d, indent=4)) # выводим его
+            find = True #
+            break #
+    if not find: #
+        if d["id"] != idd: # если не равен
+            print("Запись не найдена.") # запись не найдена
 
-elif a==3:
-    new = {
+elif a==3: # если ввели 3
+    new = { # словарь new с вводом новых записей
         "id": int(input("Введите id: ")),
         "name": input("Введите общее название рыбы: "),
         "latin_name": input("Введите латинское название рыбы: "),
         "is_salt_water_fish": str(input("Является ли рыба соленоводной (yes/no)? ")),
         "sub_type_count": int(input("Введите количество подвидов: "))
     }
-    s.append(new)
-    with open("dump.json", 'w', encoding='utf-8') as file:
-        json.dump(s, file, indent=4)
-    C += 1
+    s.append(new) #добавляем в s словарь new
+    with open("dump.json", 'w', encoding='utf-8') as file: # открываем файл
+        json.dump(s, file, indent=4) # дополняем
+    C += 1 # плюс 1 если выполнялась
 
-elif a == 4:
-    iddd=int(input("Введите id: "))
-    find = False
-    for index, d in enumerate(s):
-        if d["id"] == iddd:
-            del s[index]
-            find = True
-            break
-    if not find:
-        if d["id"] != iddd:
-            print("Запись не найдена.")
+elif a == 4: # если ввели 4
+    iddd=int(input("Введите id: ")) # вводим iddd
+    find = False #
+    for index, d in enumerate(s): # цикл для поиска
+        if d["id"] == iddd: #если ключ равен iddd
+            del s[index] #то удаляем этот индекс из s
+            find = True #
+            break #
+    if not find: #
+        if d["id"] != iddd: # если не равно
+            print("Запись не найдена.") # то выводим...
 
-elif a == 5:
-    print("Количество выполненных операций с записями: {C}")
+elif a == 5: # если ввели 5
+    print("Количество выполненных операций с записями: {C}") # выводим кличество выполненных операций C и закрываем программу
