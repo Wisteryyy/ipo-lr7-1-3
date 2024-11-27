@@ -43,30 +43,48 @@ while True:
             print("Запись не найдена.") # выводим
 
     elif option == 3: # опция 3: добавить запись
+        while True:
+          id_add = int(input("Введите ID: ")) # вводим ID
+          exist = False
+          for entry in data: # проверяем, существует ли ID
+             if entry["id"] == id_add:
+                 exist = True
+                 print("Такое id уже существует. Попробуйте что-то другое.")
+                 break
+          if not exist:
+            break
+        name_add = input("Введите общее название рыбы: ") # вводим название
+        latin_name = input("Введите латинское название рыбы: ") # вводим латинское название
+        is_salt_water_fish = input("Является ли рыба соленоводной? ") # вводим тип рыбы
+        sub_type_count = int(input("Введите количество подвидов: ")) # вводим количество подвидов
+
         new_record = { # создаём словарь для новой записи
-            "id": int(input("Введите ID: ")), # вводим ID
-            "name": input("Введите общее название рыбы: "), # вводим название
-            "latin_name": input("Введите латинское название рыбы: "), # вводим латинское название
-            "is_salt_water_fish": input("Является ли рыба соленоводной? "), # вводим тип рыбы
-            "sub_type_count": int(input("Введите количество подвидов: ")) # вводим количество подвидов
+            "id": id_add,
+            "name": name_add,
+            "latin_name": latin_name,
+            "is_salt_water_fish": is_salt_water_fish,
+            "sub_type_count": sub_type_count
         }
         data.append(new_record) # добавляем новую запись в список
+
         with open("dump.json", 'w', encoding='utf-8') as file: # открываем файл для записи
-            json.dump(data, file, indent=4) # записываем данные в формате JSON
+            json.dump(data, file) # записываем данные
         operation_count += 1 # увеличиваем счётчик операций
 
+
     elif option == 4: # опция 4: удалить запись по ID
-        delete_id = int(input("Введите ID для удаления: ")) # запрашиваем ID для удаления
-        found = False # флаг для отслеживания, найдена ли запись
-        index = 0 # инициализируем индекс для отслеживания текущего элемента
-        for entry in data: # перебираем все записи
-            if entry["id"] == delete_id: # если запись по id равна введенному id
-                del data[index] # удаляем запись по её индексу
-                found = True # устанавливаем флаг о том, что запись найдена
-                break # прерываем цикл
-            index += 1 # увеличиваем индекс для следующей записи
-        if not found: # если запись не найдена
-            print("Запись не найдена.") # выводим
+        while True:
+            delete_id = int(input("Введите ID для удаления: ")) # запрашиваем ID для удаления
+
+            for index, entry in enumerate(data): # используем enumerate для получения индекса
+                if entry["id"] == delete_id: # если запись найдена
+                    del data[index] # удаляем запись
+                    print("Запись удалена.")
+                    break
+            else:
+                print("Запись не найдена. Попробуйте еще раз.")
+                continue # запрашиваем ID снова
+            break # выходим из цикла, если запись удалена
 
     elif option == 5: # опция 5: выйти из программы
         print(f"Количество выполненных операций с записями: {operation_count}") # выводим
