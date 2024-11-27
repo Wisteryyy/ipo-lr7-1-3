@@ -17,42 +17,44 @@ while True:
     if option <= 0 or option > 5: # если номер введен неккоректно
         print("Введите корректный номер.") # запрашиваем повторный ввод
 
-    elif option == 1:  # опция 1: вывести все записи
-        print("Все записи:")  # выводим
-        for entry in data:  # перебираем все записи
+    elif option == 1: # опция 1: вывести все записи
+        print("Все записи:") # выводим
+        for entry in data: # перебираем все записи
             print(f"Код: {entry['id']}")
             print(f"Имя рыбы: {entry['name']}")
             print(f"Латинское имя рыбы: {entry['latin_name']}")
             print(f"Является ли соленоводной: {entry['is_salt_water_fish']}")
             print(f"Количество подвидов: {entry['sub_type_count']}") # выводим каждую запись
-            operation_count += 1  # увеличиваем счётчик операций
+            operation_count += 1 # увеличиваем счётчик операций
 
     elif option == 2: # опция 2: вывести запись по ID
-        search_id = int(input("Введите ID записи для поиска: ")) # запрашиваем ID для поиска
-        found = False # флаг для отслеживания, была ли найдена запись
-        for entry in data: # перебираем все записи
-            if entry["id"] == search_id: # если запись по id равна введенному id
-                print(f"Код: {entry['id']}")
-                print(f"Имя рыбы: {entry['name']}")
-                print(f"Латинское имя рыбы: {entry['latin_name']}")
-                print(f"Является ли соленоводной: {entry['is_salt_water_fish']}")
-                print(f"Количество подвидов: {entry['sub_type_count']}") # выводим каждую найденную запись
-                found = True # устанавливаем флаг о том, что запись найдена
-                break # прерываем цикл
-        if not found: # если запись не найдена
-            print("Запись не найдена.") # выводим
+        while True:
+            search_id = int(input("Введите ID записи для поиска: ")) # запрашиваем ID для поиска
+            found = False # флаг для отслеживания, была ли найдена запись
+            for entry in data: # перебираем все записи
+                if entry["id"] == search_id: # если запись по id равна введенному id
+                    print(f"Код: {entry['id']}")
+                    print(f"Имя рыбы: {entry['name']}")
+                    print(f"Латинское имя рыбы: {entry['latin_name']}")
+                    print(f"Является ли соленоводной: {entry['is_salt_water_fish']}")
+                    print(f"Количество подвидов: {entry['sub_type_count']}")
+                    found = True # запись найдена
+                    break # прерываем цикл
+            if found:
+                break # выходим из цикла, если запись найдена
+            print("Запись не найдена. Попробуйте еще раз.") # выводим, если запись не найдена
 
     elif option == 3: # опция 3: добавить запись
         while True:
-          id_add = int(input("Введите ID: ")) # вводим ID
-          exist = False
-          for entry in data: # проверяем, существует ли ID
-             if entry["id"] == id_add:
-                 exist = True
-                 print("Такое id уже существует. Попробуйте что-то другое.")
-                 break
-          if not exist:
-            break
+            id_add = int(input("Введите ID: ")) # вводим ID
+            exist = False
+            for entry in data: # проверяем, существует ли ID
+                if entry["id"] == id_add:
+                    exist = True
+                    print("Такое id уже существует. Попробуйте что-то другое.")
+                    break
+            if not exist:
+                break
         name_add = input("Введите общее название рыбы: ") # вводим название
         latin_name = input("Введите латинское название рыбы: ") # вводим латинское название
         is_salt_water_fish = input("Является ли рыба соленоводной? ") # вводим тип рыбы
