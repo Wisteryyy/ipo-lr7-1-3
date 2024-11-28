@@ -12,12 +12,19 @@ while True:
     print("-------4. Удалить запись по ID----------")
     print("-------5. Выйти из программы----------")
 
-    option = int(input("Введите номер пункта: ")) # запрашиваем у пользователя номер пункта меню
+    while True:
+        option = input("Введите номер пункта: ")  # запрашиваем у пользователя номер пункта меню
+        try:
+            search_option = int(option)
+            if search_option < 1 or search_option > 5:
+                print("Введите корректный номер от 1 до 5.")
+                continue
+        except ValueError:
+            print("Введите число.")
+            continue
+        break
 
-    if option <= 0 or option > 5: # если номер введен неккоректно
-        print("Введите корректный номер.") # запрашиваем повторный ввод
-
-    elif option == 1: # опция 1: вывести все записи
+    if search_option == 1: # опция 1: вывести все записи
         print("Все записи:") # выводим
         for entry in data: # перебираем все записи
             print(f"Код: {entry['id']}")
@@ -27,9 +34,15 @@ while True:
             print(f"Количество подвидов: {entry['sub_type_count']}") # выводим каждую запись
             operation_count += 1 # увеличиваем счётчик операций
 
-    elif option == 2: # опция 2: вывести запись по ID
+    elif search_option == 2: # опция 2: вывести запись по ID
         while True:
-            search_id = int(input("Введите ID записи для поиска: ")) # запрашиваем ID для поиска
+            str_search = input("Введите ID записи для поиска: ") # запрашиваем ID для поиска
+            search_id = -1
+            try:
+                search_id = int(str_search)
+            except ValueError:
+                print("Введите число!")
+                continue
             found = False # флаг для отслеживания, была ли найдена запись
             for entry in data: # перебираем все записи
                 if entry["id"] == search_id: # если запись по id равна введенному id
@@ -43,15 +56,22 @@ while True:
             if found:
                 break # выходим из цикла, если запись найдена
             print("Запись не найдена. Попробуйте еще раз.") # выводим, если запись не найдена
+        operation_count += 1 # увеличиваем счётчик операций
 
-    elif option == 3: # опция 3: добавить запись
+    elif search_option == 3: # опция 3: добавить запись
         while True:
-            id_add = int(input("Введите ID: ")) # вводим ID
+            str_add = input("Введите ID: ") # вводим ID
+            add_id = -1
+            try:
+                add_id = int(str_add)
+            except ValueError:
+                print("Введите число!")
+                continue
             exist = False
             for entry in data: # проверяем, существует ли ID
-                if entry["id"] == id_add:
-                    exist = True
+                if entry["id"] == add_id:
                     print("Такое id уже существует. Попробуйте что-то другое.")
+                    exist = True
                     break
             if not exist:
                 break
@@ -61,7 +81,7 @@ while True:
         sub_type_count = int(input("Введите количество подвидов: ")) # вводим количество подвидов
 
         new_record = { # создаём словарь для новой записи
-            "id": id_add,
+            "id": add_id,
             "name": name_add,
             "latin_name": latin_name,
             "is_salt_water_fish": is_salt_water_fish,
@@ -74,10 +94,15 @@ while True:
         operation_count += 1 # увеличиваем счётчик операций
 
 
-    elif option == 4: # опция 4: удалить запись по ID
+    elif search_option == 4: # опция 4: удалить запись по ID
         while True:
-            delete_id = int(input("Введите ID для удаления: ")) # запрашиваем ID для удаления
-
+            str_delete = input("Введите ID для удаления: ") # запрашиваем ID для удаления
+            delete_id = -1
+            try:
+                delete_id = int(str_delete)
+            except ValueError:
+                print("Введите число!")
+                continue
             for index, entry in enumerate(data): # используем enumerate для получения индекса
                 if entry["id"] == delete_id: # если запись найдена
                     del data[index] # удаляем запись
@@ -87,7 +112,8 @@ while True:
                 print("Запись не найдена. Попробуйте еще раз.")
                 continue # запрашиваем ID снова
             break # выходим из цикла, если запись удалена
+        operation_count += 1 # увеличиваем счётчик операций
 
-    elif option == 5: # опция 5: выйти из программы
+    elif search_option == 5: # опция 5: выйти из программы
         print(f"Количество выполненных операций с записями: {operation_count}") # выводим
         break
