@@ -77,7 +77,13 @@ while True:
                 break
         name_add = input("Введите общее название рыбы: ") # вводим название
         latin_name = input("Введите латинское название рыбы: ") # вводим латинское название
-        is_salt_water_fish = input("Является ли рыба соленоводной? ") # вводим тип рыбы
+        while True:
+            is_salt_water_fish_bool = input("Является ли рыба соленоводной? ") # вводим тип рыбы
+            if is_salt_water_fish_bool.lower() in ['true', 'false']:
+                is_salt_water_fish = is_salt_water_fish_bool.lower() == 'true'
+                break
+            else:
+                print("Введите корректное булевое значение (True/False).")
         while True:
             sub_type_count1 = (input("Введите количество подвидов: ")) # вводим количество подвидов
             try:
