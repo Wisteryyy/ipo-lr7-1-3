@@ -78,7 +78,17 @@ while True:
         name_add = input("Введите общее название рыбы: ") # вводим название
         latin_name = input("Введите латинское название рыбы: ") # вводим латинское название
         is_salt_water_fish = input("Является ли рыба соленоводной? ") # вводим тип рыбы
-        sub_type_count = int(input("Введите количество подвидов: ")) # вводим количество подвидов
+        while True:
+            sub_type_count1 = (input("Введите количество подвидов: ")) # вводим количество подвидов
+            try:
+                sub_type_count = int(sub_type_count1)
+                if sub_type_count < 0:
+                    print("Количество подвидов должно быть положительным числом.")
+                    continue
+                break
+            except ValueError:
+                    print("Введите корректное число.")
+
 
         new_record = { # создаём словарь для новой записи
             "id": add_id,
